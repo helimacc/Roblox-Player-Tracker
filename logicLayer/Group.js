@@ -3,6 +3,9 @@ const { WebhookClient } = require("discord.js");
 const Noblox = require("noblox.js");
 const VIP = require("./VIP");
 const Game = require("./Game");
+
+const JoinEmbed = require("../embeds/JoinEmbed");
+const LeftEmbed = require("../embeds/LeftEmbed");
 //#endregion
 
 
@@ -156,6 +159,7 @@ class Group {
 
 
     /**
+     * Method handling the tracking of the group's players.
      * 
      * @param {Game} game 
      */
@@ -191,10 +195,70 @@ class Group {
             }
         }
 
+
+
         console.log("Player(s) joined : " + joinedPlayers);
         console.log("Player(s) left : " + leftPlayers);
         console.log("------------------------------------------")
 
+        await this.PlrJoined(game,joinedPlayers);
+        await this.PlrLeft(game,leftPlayers);
+    }
+
+
+    /**
+     * Handles the embed of the players who joined.
+     * 
+     * @param {Game} - Tracked game.
+     * @param {Array<VIP>} joinedPlayers - List of players.
+     */
+    async PlrJoined(game,joinedPlayers){
+        for (let plrI of joinedPlayers) {
+            
+            //Fetching data for the embed
+            plrI.RankName = await Noblox.getRankNameInGroup(this._id,plrI.UserId);
+            const thumbnail = await Noblox.getPlayerThumbnail([plrI.UserId], 150, 'png', false, 'headshot');
+
+            let embed = JoinEmbed(game, plrI,this,thumbnail);
+
+            if (this._integration != undefined) {
+                // Send the embed using the webhook
+                this._integration.send({
+                    content: `${this._notify ? "<@&" + this._pingRole + ">" : ""}`,
+                    embeds: [embed],
+                }).then(() => {
+
+                }).catch(console.error);
+
+            }
+
+        }
+    }
+
+    /**
+     * Handles the embed of the players who left.
+     * 
+     *  @param {Game} - Tracked game.
+     * @param {Array<VIP>} leftPlayers - List of players.
+     */
+    async PlrLeft(game,leftPlayers){
+        for (let plrI of leftPlayers) {
+            
+            //Fetching data for the embed
+
+            let embed = LeftEmbed(game, plrI,this);
+
+            if (this._integration != undefined) {
+                // Send the embed using the webhook
+                this._integration.send({
+                    embeds: [embed],
+                }).then(() => {
+
+                }).catch(console.error);
+
+            }
+
+        }
     }
 }
 module.exports = Group

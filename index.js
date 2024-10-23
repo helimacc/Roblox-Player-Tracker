@@ -45,10 +45,6 @@ if (LoginToRoblox()){ //Will run only if connected to the account.
 
 
 
-
-
-
-
 // #region ========== [ Init Functions ] ===========
 /** 
  * Inits tracked groups.
@@ -66,6 +62,7 @@ function InitGroups(){
     }
 }
 
+
 /** 
  * Inits tracked games.
 */
@@ -76,6 +73,7 @@ function InitGames(){
         registeredGames.push(gameInstance);
     }
 }
+
 
 /**
  * Function updating the list of tracked players accross all groups.
@@ -92,13 +90,12 @@ function UpdateAllVIPs(){
  * 
  */
 function Track(){
-    let gameToTrackOn = registeredGames[0]; //ONLY DOING ONE GAME FOR NOW
+    let gameToTrackOn = registeredGames[0]; //ONLY DOING ONE GAME FOR NOW, will do multiple in future updates
 
     for(i in registeredGroups){ 
         registeredGroups[i].Track(gameToTrackOn);
     }
 }
-
 
 
 /**

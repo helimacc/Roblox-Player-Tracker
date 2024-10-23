@@ -27,7 +27,7 @@ class Game {
      * Gets the name.
      * @returns {string} Name of the game.
      */
-    get Username() {
+    get Name() {
         return this._name;
     }
 
