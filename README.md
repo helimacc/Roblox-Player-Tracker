@@ -17,7 +17,7 @@ A Node.js project to monitor the activity of a Roblox group member. This tracker
 * Configurable notifications: Sends alerts via Discord webhook, keeping group members informed of player activity.
 * Roblox ToS Compliant: The tracker respects Roblox’s Terms of Service. Tracked players can prevent tracking by adjusting their privacy settings to restrict who can join them (e.g., "Friends only" or "No one").
   
-![Example of notification]([https://i.ibb.co/2Zj2v0X/kikatue.png](https://i.ibb.co/BCdftfM/tracked-Embed.png))
+![Example of notification](https://i.ibb.co/BCdftfM/tracked-Embed.png)
 
 # Set up
 
